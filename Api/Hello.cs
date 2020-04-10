@@ -7,20 +7,22 @@ namespace Api
 {
     public class Hello
     {
-
         private static int Count = 0; // Example local state
-
         public async static Task Handler(HttpListenerRequest request, HttpListenerResponse response)
         {
-            var nothing = request != null ? "nothing" : null;
+            Console.WriteLine($"{request.HttpMethod} {request.Url.PathAndQuery}");
+            if (request.Url.AbsolutePath == "/") {
+              Count++;
+            }
 
             var data = new
             {
-                count = (++Count),
+                count = Count,
                 name = "styfle",
                 time = DateTime.Now,
                 enable = true,
-                nothing = nothing,
+                nothing = request == null ? "nothing" : null,
+                query = request.QueryString
             };
 
             var text = JsonSerializer.Serialize(data);
