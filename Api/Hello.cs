@@ -7,22 +7,23 @@ namespace Api
 {
     public class Hello
     {
-        private static int Count = 0; // Example local state
-        public async static Task Handler(HttpListenerRequest request, HttpListenerResponse response)
+        private int Count = 0; // Example local state
+        public async Task Handler(HttpListenerRequest request, HttpListenerResponse response)
         {
             Console.WriteLine($"{request.HttpMethod} {request.Url.PathAndQuery}");
-            if (request.Url.AbsolutePath == "/") {
+            if (request.Url.AbsolutePath != "/favicon.ico") {
               Count++;
             }
 
             var data = new
             {
                 count = Count,
-                name = "styfle",
                 time = DateTime.Now,
                 enable = true,
                 nothing = request == null ? "nothing" : null,
-                query = request.QueryString
+                path = request.Url.AbsolutePath,
+                port = request.Url.Port,
+                query = request.QueryString,
             };
 
             var text = JsonSerializer.Serialize(data);

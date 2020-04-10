@@ -8,13 +8,15 @@ namespace ConsoleApi
     {
         static async Task Main(string[] args)
         {
+            var port = 8080;
             var listener = new HttpListener();
-            listener.Prefixes.Add("http://*:8080/");
+            listener.Prefixes.Add($"http://*:{port}/");
             listener.Start();
-            Console.WriteLine("Listening...");
+            Console.WriteLine($"> Listening on http://localhost:{port}");
+            var hello = new Api.Hello();
             while (true) {
               var context = await listener.GetContextAsync();
-              await Api.Hello.Handler(context.Request, context.Response);
+              await hello.Handler(context.Request, context.Response);
             }
             //listener.Stop();
         }

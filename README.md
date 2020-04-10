@@ -1,6 +1,8 @@
 # Example
 
-Example of what a simple dotnet api might look like
+Example of what a simple dotnet api might look like.
+
+Ignore most of the files besides the `api` directory.
 
 ## Run locally
 
